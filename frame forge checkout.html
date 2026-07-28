@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Frame Forge Checkout</title>
+<style>
+body{margin:0;font-family:Arial;background:linear-gradient(135deg,#090b1a,#15183b,#2c1458);color:#fff;display:flex;justify-content:center;padding:30px}
+.container{max-width:820px;width:100%;background:rgba(255,255,255,.06);padding:30px;border-radius:20px;box-shadow:0 0 25px #6d28d9}
+input,textarea,select{width:100%;padding:12px;margin:10px 0;border-radius:10px;background:#1a1f40;color:#fff;border:1px solid #555}
+button{width:100%;padding:14px;margin-top:10px;border:none;border-radius:30px;background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;font-size:16px;cursor:pointer}
+.payment{display:none;background:rgba(255,255,255,.05);padding:15px;border-radius:12px;margin-top:10px}
+#trackingBox{display:none;background:#113322;padding:20px;border-radius:12px;text-align:center;margin-top:20px}
+.notification{position:fixed;top:20px;right:20px;background:linear-gradient(135deg,#7c3aed,#3b82f6);padding:16px 24px;border-radius:12px;transform:translateX(350px);opacity:0;transition:.4s}
+.notification.show{transform:translateX(0);opacity:1}
+</style></head><body>
+<div class="container">
+<h2>Frame Forge Checkout</h2>
+<h3 id="product"></h3>
+<input placeholder="Full Name"><input placeholder="Phone"><input placeholder="Email"><textarea placeholder="Address"></textarea>
+<select id="payment" onchange="showPayment()"><option value="">Select Payment</option><option>CARD</option><option>PAYPAL</option><option>JAZZCASH</option><option>EASYPAISA</option><option>CASH ON DELIVERY</option></select>
+<div id="card" class="payment"><input placeholder="Card Number"><input placeholder="Card Holder"><input placeholder="MM/YY"><input placeholder="CVV"></div>
+<div id="paypal" class="payment">PayPal: yourpaypal@example.com</div>
+<div id="jazzcash" class="payment">JazzCash: 03XX-XXXXXXX</div>
+<div id="easypaisa" class="payment">Easypaisa: 03XX-XXXXXXX</div>
+<button onclick="placeOrder()">Place Order</button>
+<button onclick="location.href='Portfolio.html'">Return to Portfolio</button>
+</div>
+<div id="notification" class="notification"></div>
+<script>
+document.getElementById("product").innerText="Product: "+(localStorage.getItem("product")||"Not Selected");
+function showPayment(){["card","paypal","jazzcash","easypaisa"].forEach(i=>document.getElementById(i).style.display="none");let m=payment.value;if(m=="CARD")card.style.display="block";if(m=="PAYPAL")paypal.style.display="block";if(m=="JAZZCASH")jazzcash.style.display="block";if(m=="EASYPAISA")easypaisa.style.display="block";}
+function notify(t){let n=document.getElementById("notification");n.textContent=t;n.classList.add("show");setTimeout(()=>n.classList.remove("show"),3000);}
+function placeOrder(){if(!payment.value){alert("Select payment method");return;}localStorage.setItem("orderStatus","Order Confirmed");notify("✅ Order placed successfully!");setTimeout(()=>location.href="Portfolio.html",3000);}
+</script></body></html>
